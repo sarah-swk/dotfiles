@@ -1,0 +1,8 @@
+Host *
+    ForwardAgent yes
+    UseKeychain yes
+    Escapechar none
+    HostKeyAlgorithms +ssh-dss
+    AddKeysToAgent yes
+    ServerAliveInterval 60
+    ServerAliveCountMax 10
