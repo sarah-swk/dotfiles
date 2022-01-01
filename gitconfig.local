@@ -1,0 +1,7 @@
+[user]
+	name = "Tomohiro Warashina"
+	email = warashina@example.com
+[ghq]
+	vcs = git
+	root = ~/Projects/go/src
+	root = ~/Projects/ghq
