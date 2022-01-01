@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<folders>
+	<folder>
+		<title>sh (symbol)</title>
+		<snippets>
+			<snippet>
+				<title>エラー出力を /dev/null</title>
+				<content>2&gt; /dev/null</content>
+			</snippet>
+			<snippet>
+				<title>history(!)無効</title>
+				<content>set +H</content>
+			</snippet>
+			<snippet>
+				<title>history(!)無効解除</title>
+				<content>set -H</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>bash</title>
+		<snippets>
+			<snippet>
+				<title>log_search</title>
+				<content>log_dir=/var/log/kafka; for f in `ls -l ${log_dir} | egrep &quot;$(date &apos;+%b %e&apos;)&quot; | awk {&apos;print $9&apos;} | egrep &quot;^mirrormaker&quot;`; do grep -H -v DEBUG ${log_dir}/${f} | grep &quot;$(date &apos;+%Y-%m-%d %H:&apos;)&quot; | grep -i -e warn -e error -e fatal | grep -v block.on.buffer.full | grep -v &apos;WARN  (kafka.utils.CoreUtils$)&apos; | cut -c 16-; done</content>
+			</snippet>
+			<snippet>
+				<title>date_yyyymmddhhmmss</title>
+				<content>date &apos;+%Y%m%d%H%M%S&apos;</content>
+			</snippet>
+			<snippet>
+				<title>background実行</title>
+				<content>nohup command &gt;&gt; /path/to/log 2&gt;&amp;1 &amp;</content>
+			</snippet>
+			<snippet>
+				<title>2行目以降を出力</title>
+				<content>tail -n +2</content>
+			</snippet>
+			<snippet>
+				<title>printf (0詰め)</title>
+				<content>`printf &quot;%02d&quot; $i`</content>
+			</snippet>
+			<snippet>
+				<title>シンボリックリンク生成</title>
+				<content>ln -s &lt;source path&gt; &lt;link path&gt;</content>
+			</snippet>
+			<snippet>
+				<title>password入力</title>
+				<content>read -s pass &lt; /dev/tty</content>
+			</snippet>
+			<snippet>
+				<title>再帰文字列検索</title>
+				<content>find . -type d \( -name &apos;exclude_dir1&apos; -o -name &apos;exclude_dir2&apos; \) -prune -o -type f -name &apos;*.ext&apos; -print  | xargs grep -n --binary-files=without-match &lt;key_word or &apos;&apos;&gt; | perl -lne &apos;print if qr//&apos;</content>
+			</snippet>
+			<snippet>
+				<title>parallel_du</title>
+				<content>ls -l | perl -alne &apos;print $F[8] if /^d/&apos; | xargs -P3 du -s | sort -n | numfmt --to=iec</content>
+			</snippet>
+			<snippet>
+				<title>while: 1 行ずつ読み取り</title>
+				<content>cat &lt;file&gt; | while read l; do
+echo $l
+done</content>
+			</snippet>
+			<snippet>
+				<title>ip -&gt; hostname 変換</title>
+				<content>| xargs -L 1 dig +short -x | sed -e &apos;s/\.$//g&apos; | sort -u</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>perl</title>
+		<snippets>
+			<snippet>
+				<title>sed</title>
+				<content>perl -pe &apos;s/&lt;pt&gt;/&lt;rep&gt;/g&apos;</content>
+			</snippet>
+			<snippet>
+				<title>sed_grouping</title>
+				<content>perl -pe &apos;s/^(\S+) (\S+) (\S+)/$2 $3 $1/;&apos;</content>
+			</snippet>
+			<snippet>
+				<title>egrep</title>
+				<content>perl -ne &apos;print if //&apos;</content>
+			</snippet>
+			<snippet>
+				<title>max</title>
+				<content>$max=($max,$v)[$max&lt;$v]</content>
+			</snippet>
+			<snippet>
+				<title>min</title>
+				<content>$min=($min,$v)[$min&gt;$v]</content>
+			</snippet>
+			<snippet>
+				<title>perl_shell_val</title>
+				<content>sv=1; perl -slne &apos;print $pv&apos; -- -pv=${sv}</content>
+			</snippet>
+			<snippet>
+				<title>convert_unixtime</title>
+				<content>echo &apos;&apos; | perl -pe &apos;s/([0-9]{10})/localtime($1)/eg&apos;</content>
+			</snippet>
+			<snippet>
+				<title>ディレクトリ以下全置換</title>
+				<content>for f in **/*.&lt;ext&gt;; do
+  perl -ip -e &apos;s/&lt;patern&gt;/&lt;replace&gt;/g&apos; ${f}
+done</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>ansible</title>
+		<snippets>
+			<snippet>
+				<title>ansible-playbook</title>
+				<content>ansible-playbook &lt;playbook&gt;.yml -K -i &lt;inv&gt;.yml --diff --limit=~&quot;&quot; --start-at-task=&apos;&apos;</content>
+			</snippet>
+			<snippet>
+				<title>ansible_shell</title>
+				<content>ansible &lt;playbook&gt;.yml -i &lt;inv&gt;.yml -m shell -a &quot;&quot; --limit=~&quot;&quot;</content>
+			</snippet>
+			<snippet>
+				<title>ansible-vault-pass-opt</title>
+				<content>--ask-vault-pass</content>
+			</snippet>
+			<snippet>
+				<title>ansible_log_searh</title>
+				<content>ansible &lt;playbook&gt;.yml -i &lt;inv&gt; -m shell -a &quot;log_dir=/var/log/kafka; for f in \`ls -l \${log_dir} | egrep \&quot;\$(date &apos;+%b %e&apos;)\&quot; | awk {&apos;print \$9&apos;} | egrep \&quot;^mirrormaker\&quot;\`; do grep -H -v DEBUG \${log_dir}/\${f} | grep \&quot;\$(date &apos;+%Y-%m-%d %H:&apos;)\&quot; | grep -i -e warn -e error -e fatal | grep -v block.on.buffer.full | grep -v &apos;WARN  (kafka.utils.CoreUtils\$)&apos; | cut -c 16-; done&quot;</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>systemctl</title>
+		<snippets>
+			<snippet>
+				<title>service_path</title>
+				<content>/etc/systemd/system/</content>
+			</snippet>
+			<snippet>
+				<title>systemctl_daemon_reload</title>
+				<content>sudo systemctl daemon-reload</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>zookeeper</title>
+		<snippets>
+			<snippet>
+				<title>zk-client</title>
+				<content>${Zookeeper}/bin/zkCli.sh -server localhost:2181</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>ssh</title>
+		<snippets>
+			<snippet>
+				<title>ssh-keygen</title>
+				<content>ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsa.`date &apos;+%Y-%m-%d&apos;` -C &quot;$USER-`date &apos;+%Y-%m-%d&apos;`&quot;</content>
+			</snippet>
+			<snippet>
+				<title>登録鍵一覧</title>
+				<content>ssh-add -L</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>rsync</title>
+		<snippets>
+			<snippet>
+				<title>rsync</title>
+				<content>rsync -av --exclude=&apos;.git&apos; --delete ./&lt;src&gt;/ hostname:&lt;dest&gt;/</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>at</title>
+		<snippets>
+			<snippet>
+				<title>確認</title>
+				<content>sudo at -l</content>
+			</snippet>
+			<snippet>
+				<title>削除</title>
+				<content>sudo at -r &lt;ID&gt;</content>
+			</snippet>
+			<snippet>
+				<title>command</title>
+				<content>echo &quot;&lt;CMD&gt;&quot;  | sudo at 2:00 apr 17</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>tc</title>
+		<snippets>
+			<snippet>
+				<title>tc (limit&amp;rate)</title>
+				<content>sudo tc qdisc add dev eth0 root tbf buffer 200Kbit limit ${N}Kbit rate ${N}Kbit</content>
+			</snippet>
+			<snippet>
+				<title>tc (list)</title>
+				<content>sudo tc qdisc list</content>
+			</snippet>
+			<snippet>
+				<title>tc (del)</title>
+				<content>sudo tc qdisc del dev eth0 root</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>rpm</title>
+		<snippets>
+			<snippet>
+				<title>db_fail</title>
+				<content>sudo rm -f /var/lib/rpm/__db*
+sudo rpm --rebuilddb</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>定型文</title>
+		<snippets>
+			<snippet>
+				<title>定型文</title>
+				<content>&lt;定型文&gt;</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>メール</title>
+		<snippets>
+			<snippet>
+				<title>テンプレート1</title>
+				<content>&lt;テンプレート&gt;</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>jira</title>
+		<snippets>
+			<snippet>
+				<title>task</title>
+				<content>*Overview*
+* description
+
+*Goal*
+* goal1</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>git</title>
+		<snippets>
+			<snippet>
+				<title>ammend</title>
+				<content>git commit --amend</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>java</title>
+		<snippets>
+			<snippet>
+				<title>dir_path</title>
+				<content>if (!filepath.endsWith(&quot;/&quot;)) {
+    filepath += &quot;/&quot;;
+}</content>
+			</snippet>
+			<snippet>
+				<title>string_builder</title>
+				<content>StringBuilder sb = new StringBuilder();
+sb.append(&quot;&quot;)
+sb.toString();</content>
+			</snippet>
+			<snippet>
+				<title>string_builder_remove_suffix</title>
+				<content>sb.setLength(sb.length() - SUFFIX_LEN);</content>
+			</snippet>
+			<snippet>
+				<title>array_to_list</title>
+				<content>Arrays.asList(array);</content>
+			</snippet>
+			<snippet>
+				<title>list_to_array</title>
+				<content>list.toArray(new Object[SIZE])</content>
+			</snippet>
+			<snippet>
+				<title>kaigyo_code</title>
+				<content>System.lineSeparator()</content>
+			</snippet>
+			<snippet>
+				<title>moji-code-check</title>
+				<content>/*
+ * $ javac -cp /usr/lib/jvm/java-1.8.0/lib/tools.jar App.java
+ * $ sudo -u &lt;PUSER&gt; -cp /usr/lib/jvm/java-1.8.0/lib/tools.jar: App &lt;PID&gt;
+ */
+import com.sun.tools.attach.VirtualMachine;
+ 
+import java.util.Properties;
+ 
+public class App {
+ 
+    public static void main(String[] args) throws Exception {
+        if (args.length &lt; 1) {
+            System.out.println(&quot;PID is not specified.&quot;);
+        }
+ 
+        VirtualMachine vm = VirtualMachine.attach(args[0]);
+        Properties props = vm.getSystemProperties();
+        System.out.println(&quot;file.encoding: &quot; + props.getProperty(&quot;file.encoding&quot;));
+    }
+}</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>java_command</title>
+		<snippets>
+			<snippet>
+				<title>mvn_project_creation</title>
+				<content># version -&gt; RELEASE
+mvn archetype:generate \
+     -DarchetypeGroupId=org.apache.maven.archetypes \
+     -DarchetypeArtifactId=maven-archetype-quickstart \
+     -DgroupId=&lt;your-group-id&gt; \
+     -DartifactId=&lt;your-project-name&gt;</content>
+			</snippet>
+			<snippet>
+				<title>ksar</title>
+				<content>java -jar ~/lib/kSar-5.0.6/kSar.jar -input &lt;input&gt;.txt -outputPDF &lt;input&gt;.pdf</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>python</title>
+		<snippets>
+			<snippet>
+				<title>dir_path</title>
+				<content>if dir_path[-1] != &quot;/&quot;:
+    dir_path += &quot;/&quot;</content>
+			</snippet>
+		</snippets>
+	</folder>
+	<folder>
+		<title>English</title>
+		<snippets>
+			<snippet>
+				<title>seems</title>
+				<content>Seems like that S V
+Seems great
+This seem to be the state changes
+There seem to be a lot of lock contention
+
+The ReplicaFetcherThread doesn&apos;t seem to be using Client API directly
+seems to not have</content>
+			</snippet>
+			<snippet>
+				<title>sayonara</title>
+				<content>Thank you for everything you have done for us.
+I was glad to work with you together.
+Good luck with your next step of carrer!</content>
+			</snippet>
+		</snippets>
+	</folder>
+</folders>
