@@ -1,3 +1,5 @@
+brew "coreutils"
 brew "go"
 brew "ghq"
+brew "jq"
 brew "python"
